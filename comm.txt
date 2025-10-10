@@ -1,0 +1,1 @@
+curl -s -X POST http://localhost:5085/api/valera/action/gotowork | jq
