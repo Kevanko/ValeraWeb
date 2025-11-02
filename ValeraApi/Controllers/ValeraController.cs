@@ -1,6 +1,6 @@
 // Controllers/ValeraController.cs
 using Microsoft.AspNetCore.Mvc;
-using ValeraApi.Models;
+using ValeraApi.DTOs;
 using ValeraApi.Services;
 
 namespace ValeraApi.Controllers;
@@ -17,58 +17,50 @@ public class ValeraController : ControllerBase
     }
 
     [HttpGet]
-    public ActionResult<Valera> GetState()
+    public ActionResult<ValeraStateDto> GetState()
     {
-        var valera = _service.GetValera();
-        return Ok(valera);
+        return Ok(_service.GetState());
     }
 
     [HttpPost("work")]
-    public ActionResult<Valera> GoToWork()
+    public ActionResult<ValeraStateDto> GoToWork()
     {
-        _service.GoToWork();
-        return Ok(_service.GetValera());
+        return Ok(_service.GoToWork());
     }
 
     [HttpPost("nature")]
-    public ActionResult<Valera> ContemplateNature()
+    public ActionResult<ValeraStateDto> ContemplateNature()
     {
-        _service.ContemplateNature();
-        return Ok(_service.GetValera());
+        return Ok(_service.ContemplateNature());
     }
 
     [HttpPost("wine")]
-    public ActionResult<Valera> DrinkWineAndWatchSeries()
+    public ActionResult<ValeraStateDto> DrinkWineAndWatchSeries()
     {
-        _service.DrinkWineAndWatchSeries();
-        return Ok(_service.GetValera());
+        return Ok(_service.DrinkWineAndWatchSeries());
     }
 
     [HttpPost("bar")]
-    public ActionResult<Valera> GoToBar()
+    public ActionResult<ValeraStateDto> GoToBar()
     {
-        _service.GoToBar();
-        return Ok(_service.GetValera());
+        return Ok(_service.GoToBar());
     }
 
     [HttpPost("marginals")]
-    public ActionResult<Valera> DrinkWithMarginals()
+    public ActionResult<ValeraStateDto> DrinkWithMarginals()
     {
-        _service.DrinkWithMarginals();
-        return Ok(_service.GetValera());
+        return Ok(_service.DrinkWithMarginals());
     }
 
     [HttpPost("subway")]
-    public ActionResult<Valera> SingInSubway()
+    public ActionResult<ValeraStateDto> SingInSubway()
     {
-        _service.SingInSubway();
-        return Ok(_service.GetValera());
+        return Ok(_service.SingInSubway());
     }
 
     [HttpPost("sleep")]
-    public ActionResult<Valera> Sleep()
+    public ActionResult<ValeraStateDto> Sleep()
     {
-        _service.Sleep();
-        return Ok(_service.GetValera());
+        return Ok(_service.Sleep());
     }
 }

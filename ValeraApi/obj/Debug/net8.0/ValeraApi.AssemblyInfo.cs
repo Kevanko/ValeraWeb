@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ValeraApi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3608aad109a9165943b100939dd8e94c82d68423")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e6e47dddedb69b619ede8138a6eaffe9347f9b94")]
 [assembly: System.Reflection.AssemblyProductAttribute("ValeraApi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ValeraApi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

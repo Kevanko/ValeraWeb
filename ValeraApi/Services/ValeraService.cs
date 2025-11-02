@@ -1,5 +1,6 @@
 // Services/ValeraService.cs
 using ValeraApi.Data;
+using ValeraApi.DTOs;
 using ValeraApi.Models;
 
 namespace ValeraApi.Services;
@@ -13,64 +14,82 @@ public class ValeraService
         _context = context;
     }
 
-    public Valera GetValera()
+    private Valera GetValera()
     {
-        return _context.Valeras.Find(1)!; // Всегда один Валера
+        return _context.Valeras.Find(1)!;
     }
 
-    public void SaveChanges()
+    private ValeraStateDto ToDto(Valera v)
     {
-        _context.SaveChanges();
+        return new ValeraStateDto
+        {
+            Health = v.Health,
+            Alcohol = v.Alcohol,
+            Joy = v.Joy,
+            Fatigue = v.Fatigue,
+            Money = v.Money
+        };
     }
 
-    // --- Действия ---
+    public ValeraStateDto GetState()
+    {
+        var v = GetValera();
+        return ToDto(v);
+    }
 
-    public void GoToWork()
+    public ValeraStateDto GoToWork()
     {
         var v = GetValera();
         v.GoToWork();
-        SaveChanges();
+        _context.SaveChanges();
+        return ToDto(v);
     }
 
-    public void ContemplateNature()
+    public ValeraStateDto ContemplateNature()
     {
         var v = GetValera();
         v.ContemplateNature();
-        SaveChanges();
+        _context.SaveChanges();
+        return ToDto(v);
     }
 
-    public void DrinkWineAndWatchSeries()
+    public ValeraStateDto DrinkWineAndWatchSeries()
     {
         var v = GetValera();
         v.DrinkWineAndWatchSeries();
-        SaveChanges();
+        _context.SaveChanges();
+        return ToDto(v);
     }
 
-    public void GoToBar()
+    public ValeraStateDto GoToBar()
     {
         var v = GetValera();
         v.GoToBar();
-        SaveChanges();
+        _context.SaveChanges();
+        return ToDto(v);
     }
 
-    public void DrinkWithMarginals()
+    public ValeraStateDto DrinkWithMarginals()
     {
         var v = GetValera();
         v.DrinkWithMarginals();
-        SaveChanges();
+        _context.SaveChanges();
+        return ToDto(v);
     }
 
-    public void SingInSubway()
+    public ValeraStateDto SingInSubway()
     {
         var v = GetValera();
         v.SingInSubway();
-        SaveChanges();
+        _context.SaveChanges();
+        return ToDto(v);
     }
 
-    public void Sleep()
+    public ValeraStateDto Sleep()
     {
         var v = GetValera();
         v.Sleep();
-        SaveChanges();
+        _context.SaveChanges();
+        return ToDto(v);
     }
 }
