@@ -13,10 +13,6 @@ public class AppDbContext : DbContext
     public DbSet<Valera> Valeras { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        // Гарантируем, что будет только один Валера с Id = 1
-        modelBuilder.Entity<Valera>().HasData(
-            new Valera { Id = 1 }
-        );
+    {    
     }
 }

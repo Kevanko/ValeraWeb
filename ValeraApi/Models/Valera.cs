@@ -1,17 +1,19 @@
+// Models/Valera.cs
 namespace ValeraApi.Models;
 
 public class Valera
 {
+    public int Id { get; set; }
 
-    public int Id { get; set; } = 1; 
+    public string Name { get; set; } = "Валера";
 
     public int Health { get; set; } = 100;
     public int Alcohol { get; set; } = 0;
     public int Joy { get; set; } = 0;
     public int Fatigue { get; set; } = 0;
-    public int Money { get; set; } = 0;
+    public decimal Money { get; set; } = 0;
 
-    // Пойти на работу
+    // Действия остаются без изменений
     public void GoToWork()
     {
         if (Alcohol < 50 && Fatigue < 10)
@@ -23,7 +25,6 @@ public class Valera
         }
     }
 
-    // Созерцать природу
     public void ContemplateNature()
     {
         Joy = Math.Clamp(Joy + 1, -10, 10);
@@ -31,7 +32,6 @@ public class Valera
         Fatigue = Math.Min(100, Fatigue + 10);
     }
 
-    // Пить вино и смотреть сериал
     public void DrinkWineAndWatchSeries()
     {
         Joy = Math.Clamp(Joy - 1, -10, 10);
@@ -41,7 +41,6 @@ public class Valera
         Money -= 20;
     }
 
-    // Сходить в бар
     public void GoToBar()
     {
         Joy = Math.Clamp(Joy + 1, -10, 10);
@@ -51,7 +50,6 @@ public class Valera
         Money -= 100;
     }
 
-    // Выпить с маргинальными личностями
     public void DrinkWithMarginals()
     {
         Joy = Math.Clamp(Joy + 5, -10, 10);
@@ -61,7 +59,6 @@ public class Valera
         Money -= 150;
     }
 
-    // Петь в метро
     public void SingInSubway()
     {
         Joy = Math.Clamp(Joy + 1, -10, 10);
@@ -79,7 +76,6 @@ public class Valera
         }
     }
 
-    // Спать
     public void Sleep()
     {
         if (Alcohol < 30)

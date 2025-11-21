@@ -1,4 +1,5 @@
 // Services/ValeraService.cs
+using Microsoft.EntityFrameworkCore;
 using ValeraApi.Data;
 using ValeraApi.DTOs;
 using ValeraApi.Models;
@@ -14,15 +15,12 @@ public class ValeraService
         _context = context;
     }
 
-    private Valera GetValera()
-    {
-        return _context.Valeras.Find(1)!;
-    }
-
     private ValeraStateDto ToDto(Valera v)
     {
         return new ValeraStateDto
         {
+            Id = v.Id,
+            Name = v.Name,
             Health = v.Health,
             Alcohol = v.Alcohol,
             Joy = v.Joy,
@@ -31,63 +29,96 @@ public class ValeraService
         };
     }
 
-    public ValeraStateDto GetState()
+    // Получить всех Валер
+    public List<ValeraStateDto> GetAllValeras()
     {
-        var v = GetValera();
-        return ToDto(v);
+        var valeras = _context.Valeras.ToList();
+        return valeras.Select(ToDto).ToList();
     }
 
-    public ValeraStateDto GoToWork()
+    // Получить по ID
+    public ValeraStateDto? GetById(int id)
     {
-        var v = GetValera();
+        var v = _context.Valeras.Find(id);
+        return v == null ? null : ToDto(v);
+    }
+
+    // Создать нового Валеру
+    public ValeraStateDto CreateValera(CreateValeraDto dto)
+    {
+        var valera = new Valera
+        {
+            Name = dto.Name,
+            Health = dto.Health,
+            Alcohol = dto.Alcohol,
+            Joy = dto.Joy,
+            Fatigue = dto.Fatigue,
+            Money = dto.Money
+        };
+        _context.Valeras.Add(valera);
+        _context.SaveChanges();
+        return ToDto(valera);
+    }
+
+    // Действия — теперь принимают ID
+    public ValeraStateDto? GoToWork(int id)
+    {
+        var v = _context.Valeras.Find(id);
+        if (v == null) return null;
         v.GoToWork();
         _context.SaveChanges();
         return ToDto(v);
     }
 
-    public ValeraStateDto ContemplateNature()
+    public ValeraStateDto? ContemplateNature(int id)
     {
-        var v = GetValera();
+        var v = _context.Valeras.Find(id);
+        if (v == null) return null;
         v.ContemplateNature();
         _context.SaveChanges();
         return ToDto(v);
     }
 
-    public ValeraStateDto DrinkWineAndWatchSeries()
+    public ValeraStateDto? DrinkWineAndWatchSeries(int id)
     {
-        var v = GetValera();
+        var v = _context.Valeras.Find(id);
+        if (v == null) return null;
         v.DrinkWineAndWatchSeries();
         _context.SaveChanges();
         return ToDto(v);
     }
 
-    public ValeraStateDto GoToBar()
+    public ValeraStateDto? GoToBar(int id)
     {
-        var v = GetValera();
+        var v = _context.Valeras.Find(id);
+        if (v == null) return null;
         v.GoToBar();
         _context.SaveChanges();
         return ToDto(v);
     }
 
-    public ValeraStateDto DrinkWithMarginals()
+    public ValeraStateDto? DrinkWithMarginals(int id)
     {
-        var v = GetValera();
+        var v = _context.Valeras.Find(id);
+        if (v == null) return null;
         v.DrinkWithMarginals();
         _context.SaveChanges();
         return ToDto(v);
     }
 
-    public ValeraStateDto SingInSubway()
+    public ValeraStateDto? SingInSubway(int id)
     {
-        var v = GetValera();
+        var v = _context.Valeras.Find(id);
+        if (v == null) return null;
         v.SingInSubway();
         _context.SaveChanges();
         return ToDto(v);
     }
 
-    public ValeraStateDto Sleep()
+    public ValeraStateDto? Sleep(int id)
     {
-        var v = GetValera();
+        var v = _context.Valeras.Find(id);
+        if (v == null) return null;
         v.Sleep();
         _context.SaveChanges();
         return ToDto(v);

@@ -16,51 +16,92 @@ public class ValeraController : ControllerBase
         _service = service;
     }
 
+    // GET /api/valera → список всех Валер
     [HttpGet]
-    public ActionResult<ValeraStateDto> GetState()
+    public ActionResult<List<ValeraStateDto>> GetAll()
     {
-        return Ok(_service.GetState());
+        return Ok(_service.GetAllValeras());
     }
 
-    [HttpPost("work")]
-    public ActionResult<ValeraStateDto> GoToWork()
+    // POST /api/valera → создать нового Валеру
+    [HttpPost]
+    public ActionResult<ValeraStateDto> Create([FromBody] CreateValeraDto dto)
     {
-        return Ok(_service.GoToWork());
+        var result = _service.CreateValera(dto);
+        return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);
     }
 
-    [HttpPost("nature")]
-    public ActionResult<ValeraStateDto> ContemplateNature()
+    // GET /api/valera/{id} → получить по ID
+    [HttpGet("{id}")]
+    public ActionResult<ValeraStateDto> GetById(int id)
     {
-        return Ok(_service.ContemplateNature());
+        var result = _service.GetById(id);
+        if (result == null)
+            return NotFound();
+        return Ok(result);
     }
 
-    [HttpPost("wine")]
-    public ActionResult<ValeraStateDto> DrinkWineAndWatchSeries()
+    // POST /api/valera/{id}/work
+    [HttpPost("{id}/work")]
+    public ActionResult<ValeraStateDto> GoToWork(int id)
     {
-        return Ok(_service.DrinkWineAndWatchSeries());
+        var result = _service.GoToWork(id);
+        if (result == null)
+            return NotFound();
+        return Ok(result);
     }
 
-    [HttpPost("bar")]
-    public ActionResult<ValeraStateDto> GoToBar()
+    [HttpPost("{id}/nature")]
+    public ActionResult<ValeraStateDto> ContemplateNature(int id)
     {
-        return Ok(_service.GoToBar());
+        var result = _service.ContemplateNature(id);
+        if (result == null)
+            return NotFound();
+        return Ok(result);
     }
 
-    [HttpPost("marginals")]
-    public ActionResult<ValeraStateDto> DrinkWithMarginals()
+    [HttpPost("{id}/wine")]
+    public ActionResult<ValeraStateDto> DrinkWineAndWatchSeries(int id)
     {
-        return Ok(_service.DrinkWithMarginals());
+        var result = _service.DrinkWineAndWatchSeries(id);
+        if (result == null)
+            return NotFound();
+        return Ok(result);
     }
 
-    [HttpPost("subway")]
-    public ActionResult<ValeraStateDto> SingInSubway()
+    [HttpPost("{id}/bar")]
+    public ActionResult<ValeraStateDto> GoToBar(int id)
     {
-        return Ok(_service.SingInSubway());
+        var result = _service.GoToBar(id);
+        if (result == null)
+            return NotFound();
+        return Ok(result);
     }
 
-    [HttpPost("sleep")]
-    public ActionResult<ValeraStateDto> Sleep()
+    [HttpPost("{id}/marginals")]
+    public ActionResult<ValeraStateDto> DrinkWithMarginals(int id)
     {
-        return Ok(_service.Sleep());
+        var result = _service.DrinkWithMarginals(id);
+        if (result == null)
+            return NotFound();
+        return Ok(result);
+    }
+
+    [HttpPost("{id}/subway")]
+    public ActionResult<ValeraStateDto> SingInSubway(int id)
+    {
+        var result = _service.SingInSubway(id);
+        if (result == null)
+            return NotFound();
+        return Ok(result);
+    }
+
+    [HttpPost("{id}/sleep")]
+    public ActionResult<ValeraStateDto> Sleep(int id)
+    {
+        var result = _service.Sleep(id);
+        if (result == null)
+            return NotFound();
+        return Ok(result);
     }
 }
