@@ -37,7 +37,6 @@ export default function ValeraStats() {
     }
   }, [id]); // ← зависимость только от id
 
-  // useEffect зависит только от id → нет зацикливания
   useEffect(() => {
     loadValera();
   }, [id, loadValera]);
