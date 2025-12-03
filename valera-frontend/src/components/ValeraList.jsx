@@ -31,6 +31,12 @@ export default function ValeraList() {
 
   // Загружаем список Валер при старте
   useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      alert('Войдите, чтобы управлять Валерами');
+      window.location.href = '/login';
+      return;
+    }
     loadValeras();
   }, []);
 

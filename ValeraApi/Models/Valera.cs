@@ -4,6 +4,8 @@ namespace ValeraApi.Models;
 public class Valera
 {
     public int Id { get; set; }
+    public int UserId { get; set; } // ← владелец
+    public User? User { get; set; } // ← навигационное свойство (опционально)
 
     public string Name { get; set; } = "Валера";
 

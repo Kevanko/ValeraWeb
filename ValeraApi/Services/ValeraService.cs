@@ -1,5 +1,5 @@
-// Services/ValeraService.cs
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 using ValeraApi.Data;
 using ValeraApi.DTOs;
 using ValeraApi.Models;
@@ -9,10 +9,18 @@ namespace ValeraApi.Services;
 public class ValeraService
 {
     private readonly AppDbContext _context;
+    private readonly IHttpContextAccessor? _httpContextAccessor;
 
-    public ValeraService(AppDbContext context)
+    public ValeraService(AppDbContext context, IHttpContextAccessor httpContextAccessor)
     {
         _context = context;
+        _httpContextAccessor = httpContextAccessor;
+    }
+
+    private int? GetCurrentUserId()
+    {
+        var idStr = _httpContextAccessor?.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        return int.TryParse(idStr, out int id) ? id : null;
     }
 
     private ValeraStateDto ToDto(Valera v)
@@ -29,25 +37,33 @@ public class ValeraService
         };
     }
 
-    // Получить всех Валер
     public List<ValeraStateDto> GetAllValeras()
     {
-        var valeras = _context.Valeras.ToList();
-        return valeras.Select(ToDto).ToList();
+        var userId = GetCurrentUserId();
+        if (userId == null) return new();
+
+        var userRole = _httpContextAccessor?.HttpContext?.User.FindFirst(ClaimTypes.Role)?.Value;
+
+        var query = _context.Valeras.AsQueryable();
+        if (userRole != "Admin")
+            query = query.Where(v => v.UserId == userId);
+
+        return query.ToList().Select(ToDto).ToList();
     }
 
-    // Получить по ID
     public ValeraStateDto? GetById(int id)
     {
         var v = _context.Valeras.Find(id);
         return v == null ? null : ToDto(v);
     }
 
-    // Создать нового Валеру
     public ValeraStateDto CreateValera(CreateValeraDto dto)
     {
+        var userId = GetCurrentUserId() ?? throw new UnauthorizedAccessException();
+
         var valera = new Valera
         {
+            UserId = userId,
             Name = dto.Name,
             Health = dto.Health,
             Alcohol = dto.Alcohol,
@@ -55,12 +71,13 @@ public class ValeraService
             Fatigue = dto.Fatigue,
             Money = dto.Money
         };
+
         _context.Valeras.Add(valera);
         _context.SaveChanges();
         return ToDto(valera);
     }
 
-    // Действия — теперь принимают ID
+    // ... остальные методы (GoToWork, Sleep и т.д.) — без изменений
     public ValeraStateDto? GoToWork(int id)
     {
         var v = _context.Valeras.Find(id);
